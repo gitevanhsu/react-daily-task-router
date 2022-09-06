@@ -5,6 +5,8 @@ import {
   Routes,
   Route,
   useNavigate,
+  useParams,
+  Outlet
 } from 'react-router-dom';
 
 const Todo = () => {
@@ -21,7 +23,6 @@ const Login = () => {
 };
 
 
-
 const Logout = () => {
   const navigate = useNavigate()
   return (
@@ -34,6 +35,26 @@ const Register = () => {
 const Home = () => {
   return <p>這是首頁</p>;
 };
+
+
+const Post = () => {
+  return (
+    <>
+      <p>下方顯示User ID</p>
+      <Outlet/>
+    </>
+  )
+}
+
+const PostId = ()=>{
+  const {postId} = useParams();
+  return(
+    <>
+      <p>您的Post ID是:{postId}</p>
+    </>
+  )
+}
+
 function App() {
   return (
     <div className="container">
@@ -51,9 +72,16 @@ function App() {
           <NavLink to="/todo">
             <p>Todo 頁面</p>
           </NavLink>
+          <NavLink to="/post">
+            <p>Post 頁面</p>
+          </NavLink>
         </div>
         {/* Routes, Route 練習區 */}
         <Routes>
+          <Route path='post' element={<Post />} >
+            <Route path=':postId' element={<PostId/>} />
+            {/* path=變數名稱 */}
+          </Route> 
           <Route path="/" element={<Home />} /> 
           <Route path="/register" element={<Register />} /> 
           <Route path="/login" element={<Login />} /> 
